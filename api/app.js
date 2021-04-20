@@ -1,0 +1,41 @@
+const cors = require('cors')
+const morgan = require('morgan')
+const express = require('express')
+const compression = require('compression')
+
+// Define the express application
+const app = express()
+
+// Open Mongoose connection to db
+require('../db')
+
+// Cors middleware for origin and Headers
+app.use(cors())
+
+// Adding The 'body-parser' middleware only handles JSON and urlencoded data
+app.use(express.json())
+
+// Use Morgan middleware for logging every request status on console
+app.use(morgan('dev'))
+
+// Invalid routes handling middleware
+app.use((req, res, next) => {
+    const error = new Error('404 not found')
+    next(error)
+})
+
+// Error handling middleware
+app.use((error, req, res, next) => {
+    res.status(error.status || 500)
+    res.json({
+        error: {
+            message: error.message
+        }
+    })
+})
+
+// Compressing the application
+app.use(compression())
+
+// Export the application
+module.exports = app
