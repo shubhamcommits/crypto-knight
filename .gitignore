@@ -1,4 +1,5 @@
 node_modules
 .env
+cryptoKnightKey.cer
 package-lock.json
 yarn.lock
