@@ -11,4 +11,4 @@ const keys = {
 }
 
 // Export the keys
-module.exports = keys;
+module.exports = keys
