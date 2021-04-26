@@ -42,7 +42,7 @@ const UserSchema = new Schema({
     },
     mobile_number: {
         type: String,
-        default: null
+        default: ''
     },
     created_date: {
         type: Date,
