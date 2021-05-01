@@ -1,6 +1,7 @@
 const app = require('./api/app')
 const http = require('http')
 const cluster = require('cluster')
+const { Socket }= require('./utils')
 
 if (cluster.isMaster) {
 
@@ -8,6 +9,17 @@ if (cluster.isMaster) {
     const numWorkers = require('os').cpus().length
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...')
+
+    const server = require('http').createServer()
+    const io = require('socket.io')(server)
+    const redis = require('socket.io-redis')
+  
+    io.adapter(redis({ host: 'localhost', port: 6379 }))
+  
+    setInterval(function() {
+      // all workers will receive this in Redis, and emit
+      io.emit('data', 'payload')
+    }, 1000)
 
     // Fork the process and make clusters
     for (let i = 0 ; i < numWorkers; i++) {
@@ -38,6 +50,9 @@ if (cluster.isMaster) {
 
     // Creating Microservice Server
     const server = http.createServer(app)
+
+    // Start the Socket Server
+    const io = Socket.init(server)
 
     // Exposing the server to the desired port
     server.listen(port, host, () => {
