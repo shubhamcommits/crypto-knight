@@ -12,6 +12,8 @@ const socket = io('ws://localhost:3000', {
 
 // socket.on('connect')
 
+socket.emit('global')
+
 socket.on('globalUpdate', data => {
 
     console.log(data)

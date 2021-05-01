@@ -28,10 +28,7 @@ const socket = {
                 console.log('Total number of users connected to the app: ', globalConnections.length)
 
                 // Turn on the sockets
-                socket.on('global', async (message) => {
-
-                    // Console the message
-                    console.log(message)
+                socket.on('global', async () => {
 
                     // Fetch the data
                     let coins = await axios.get(process.env.REALTIME_COIN_PRICES)
