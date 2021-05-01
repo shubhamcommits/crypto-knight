@@ -3,3 +3,5 @@ node_modules
 cryptoKnightKey.cer
 package-lock.json
 yarn.lock
+.DS_Store
+dump.rdb
