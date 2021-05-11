@@ -2,7 +2,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const express = require('express')
 const compression = require('compression')
-const { AuthRoutes, UserRoutes } = require('./routes')
+const { AuthRoutes, UserRoutes, TriggerRoutes } = require('./routes')
 
 // Define the express application
 const app = express()
@@ -22,6 +22,7 @@ app.use(morgan('dev'))
 // Correct REST naming
 app.use('/api/auths', AuthRoutes)
 app.use('/api/users', UserRoutes)
+app.use('/api/triggers', TriggerRoutes)
 
 // Invalid routes handling middleware
 app.use((req, res, next) => {

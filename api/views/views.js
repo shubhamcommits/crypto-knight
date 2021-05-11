@@ -1,4 +1,4 @@
-const socket = io('ws://13.58.58.48', {
+const socket = io('ws://localhost:3000', {
     secure: true,
     reconnection: true,
     reconnectionAttempts: Infinity,

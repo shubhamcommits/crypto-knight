@@ -52,7 +52,11 @@ const UserSchema = new Schema({
         type: Number,
         default: 0,
         required: true
-    }
+    },
+    triggers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Trigger'
+    }]
 })
 
 const User = mongoose.model('User', UserSchema)

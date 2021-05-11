@@ -1,6 +1,5 @@
 const redisAdapter = require('socket.io-redis')
-const { CoinService } = require('../api/services')
-const axios = require('axios')
+const CoinService = require('../api/services/coin.service')
 
 // Maintains the count of all the connected users
 const globalConnections = []
@@ -31,19 +30,19 @@ const socket = {
                 socket.on('global', async () => {
 
                     // Fetch the data
-                    let coins = await axios.get(process.env.REALTIME_COIN_PRICES)
+                    let coins = await CoinService.realTimeCoinPrices()
 
                     // Emit the message from the socket
-                    io.emit('globalUpdate', coins.data)
+                    io.emit('globalUpdate', coins)
 
                     // Call the update
                     setInterval(async () => {
 
                         // Fetch the data
-                        let coins = await axios.get(process.env.REALTIME_COIN_PRICES)
+                        let coins = await CoinService.realTimeCoinPrices()
 
                         // Emit the message from the socket
-                        io.emit('globalUpdate', coins.data)
+                        io.emit('globalUpdate', coins)
                     }, 3000)
                 })
 
