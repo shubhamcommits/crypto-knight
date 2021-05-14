@@ -60,6 +60,10 @@ const UserSchema = new Schema({
     favcoin: [{
         type: Schema.Types.ObjectId,
         ref: 'Favcoin'
+    }],
+    portfolio: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Portfolio'
     }]
 })
 
