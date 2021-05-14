@@ -7,13 +7,11 @@ const PortfolioService = {
         return new Promise(async (resolve, reject) => {
             try {
 
-                // Check if Portfolio with this user exists and already contains specified coinid
-                let portfolio = await Portfolio.findOne({ _user: portfolioData.user, coinid: portfolioData.coinid })
-                
-
-                // if above condition is not meant....either portfolio is not there or this coin is not there 
-                if(!portfolio){
-                //create portfolio data
+                // Create a new user
+                let portfoliotrue = await Portfolio.findOne( {_user: portfolioData.user, coinid: portfolioData.coinid})
+                let user = await User.findById({_id:portfolioData.user})
+                if(!portfoliotrue){
+                // Prepare the portfolio data
                 let portfolio = {
                     coinid: portfolioData.coinid,
                     _user: portfolioData.user,
@@ -21,27 +19,9 @@ const PortfolioService = {
                     quantity: portfolioData.quantity,
                     totalinvestment: (portfolioData.price*portfolioData.quantity)
                 }
-                //push portfolio data
+                
+                // Create the new portfolio
                 portfolio = await Portfolio.create(portfolio)
-                portfolio.push(portfolio)
-                }
-
-
-                //if coinid already exists
-                else{
-                    //update quantity(totalquantity= new+old quantity)
-                    portfolioData.quantity = portfolioData.quantity + portfolio.quantity
-
-                    //Update the portfolio
-                    const portfolio = await Portfolio.findByIdAndUpdate({
-                        _id: portfolioData._id
-                    }, {
-                        $set: portfolioData
-                    }, {
-                        new: true
-                    })
-                }
-                //End of Else
 
                 // Push the portfolio object to the current user
                 user.portfolio.push(portfolio)
@@ -56,7 +36,40 @@ const PortfolioService = {
 
                 // Resolve the user
                 resolve(user)
+                }
+                else{
+                    let newquantity = portfoliotrue.quantity + portfolioData.quantity
+                    let newinvestment = portfoliotrue.totalinvestment + (portfolioData.price*portfolioData.quantity)
 
+                     let portfolio = {
+                        coinid: portfolioData.coinid,
+                        _user: portfolioData.user,
+                        price: portfolioData.price,
+                        quantity: newquantity,
+                        totalinvestment: newinvestment
+                    }
+
+                   portfolio = await Portfolio.findOneAndUpdate(
+                        {_id: portfoliotrue._id},
+                        {quantity: newquantity,
+                        totalinvestment: newinvestment}
+                    )
+
+                    user.portfolio.push(portfolio)
+
+                    // Save the user object
+                    user = await User.findByIdAndUpdate(
+                        { _id: portfolioData.user },
+                        { $push: { portfolio: portfolio } },
+                        { new: true }
+                    )
+                    .populate('portfolio', '_id coinid price quantity totalinvestment')
+
+                    // Resolve the user
+                    resolve(user)
+
+                    // reject({error: "exists"})
+                }
             } catch (error) {
                 // Catch the error and reject the promise
                 reject({ error: error })
