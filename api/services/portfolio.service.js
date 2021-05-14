@@ -41,13 +41,13 @@ const PortfolioService = {
                     let newquantity = portfoliotrue.quantity + portfolioData.quantity
                     let newinvestment = portfoliotrue.totalinvestment + (portfolioData.price*portfolioData.quantity)
 
-                     let portfolio = {
-                        coinid: portfolioData.coinid,
-                        _user: portfolioData.user,
-                        price: portfolioData.price,
-                        quantity: newquantity,
-                        totalinvestment: newinvestment
-                    }
+                    //  let portfolio = {
+                    //     coinid: portfolioData.coinid,
+                    //     _user: portfolioData.user,
+                    //     price: portfolioData.price,
+                    //     quantity: newquantity,
+                    //     totalinvestment: newinvestment
+                    // }
 
                    portfolio = await Portfolio.findOneAndUpdate(
                         {_id: portfoliotrue._id},
@@ -76,7 +76,27 @@ const PortfolioService = {
             }
         })
 
-    }
+    },
+
+    async getPortfolio(userId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                // Find the User
+                const portfolio = await Portfolio.find({
+                    _user: userId
+                })
+                .populate('portfolio', 'coinid price quantity totalinvestment')
+
+                // Resolve the promise
+                resolve(portfolio)
+            } catch (error) {
+
+                // Catch the error and reject the promise
+                reject({ error: error })
+            }
+        })
+    },
 }
 
 
