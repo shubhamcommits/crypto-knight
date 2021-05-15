@@ -1,5 +1,6 @@
 const redisAdapter = require('socket.io-redis')
 const CoinService = require('../api/services/coin.service')
+const { User, Trigger } = require('../api/models')
 
 // Maintains the count of all the connected users
 const globalConnections = []
@@ -48,7 +49,79 @@ const socket = {
 
                 // Join user on private user room
                 socket.on('joinUser', (userId) => {
-                    socket.join(userId)
+
+                    // Join the room
+                    socket.join(`room_${userId}`, () => {
+
+                        // Console the confirmation
+                        console.log('User has joined a new room: ', `room_${userId}`)
+                    })
+                })
+
+                // Create the trigger
+                socket.on('triggers', async (userId, timeInterval) => {
+
+                    setInterval(async () => {
+
+                        // Find the user
+                        let user = await User.findById(userId)
+                            .populate('triggers', '_id name coin price condition notified')
+
+                        // Create triggers array
+                        let triggers = []
+
+                        // Check if triggers contain elements
+                        if (user.triggers.length > 0) {
+
+                            // Implement triggers array
+                            triggers = user.triggers
+
+                            // Loop out through each trigger
+                            for (let index = 0; index < triggers.length; index++) {
+
+                                // Get current coin details
+                                let coinDetails = await CoinService.getCurrentCoinPrice(triggers[index]['coin'])
+                                let originalCoinPrice = coinDetails['market_data']['current_price']['inr']
+
+                                // Fetch the condition and set price
+                                let condition = triggers[index]['condition']
+                                let setPrice = triggers[index]['price']
+
+                                if (triggers[index]['notified'] == false) {
+
+                                    // Check for the conditions
+                                    if (condition == 'less') {
+                                        if (setPrice > originalCoinPrice) {
+                                            io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
+                                                message: `Condition for ${triggers[index]['coin']} has been met.`
+                                            })
+                                        }
+                                    } else if (condition == 'greater') {
+                                        if (setPrice < originalCoinPrice) {
+                                            io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
+                                                message: `Condition for ${triggers[index]['coin']} has been met.`
+                                            })
+                                        }
+                                    } else if (condition == 'equal') {
+                                        if (setPrice == originalCoinPrice) {
+                                            io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
+                                                message: `Condition for ${triggers[index]['coin']} has been met.`
+                                            })
+                                        }
+                                    }
+
+                                    // Update the trigger status
+                                    await Trigger.findByIdAndUpdate(
+                                        { _id: triggers[index]['_id'] },
+                                        { $set: { notified: true } },
+                                        { new: true })
+                                }
+
+                            }
+
+                        }
+
+                    }, timeInterval)
                 })
 
                 // On Disconnecting the socket

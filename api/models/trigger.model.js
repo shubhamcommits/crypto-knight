@@ -28,6 +28,10 @@ const TriggerSchema = new Schema({
   created_date: {
     type: Date,
     default: moment().format()
+  },
+  notified: {
+    type: Boolean,
+    default: false
   }
 })
 

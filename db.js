@@ -10,7 +10,7 @@ const  dbURL  = keys.MONGO_DB_URL || 'mongodb://127.0.0.1:27017/crypto-knight'
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 }
 
 // Connect mongoose to db
