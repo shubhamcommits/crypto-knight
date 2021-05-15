@@ -40,7 +40,26 @@ const FavcoinService = {
             }
         })
 
-    }
+    },
+    async getFavcoin(userId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                // Find the User
+                const favcoin = await Favcoin.find({
+                    _user: userId
+                })
+                .populate('favcoin', 'name id')
+
+                // Resolve the promise
+                resolve(favcoin)
+            } catch (error) {
+
+                // Catch the error and reject the promise
+                reject({ error: error })
+            }
+        })
+    },
 }
 
 
