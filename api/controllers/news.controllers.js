@@ -1,20 +1,20 @@
-const { FavcoinService } = require('../services')
+const { NewsService } = require('../services')
 
-const FavcoinControllers = {
-    async createFavcoin(req, res, next){
+const NewsControllers = {
+    async createNews(req, res, next){
         try {
 
             // Fetch the data from the body
-            let { favcoin } = req.body
+            let { news } = req.body
 
             // call the get user function
-            FavcoinService.createFavcoin(favcoin)
+            NewsService.createNews(news)
                 .then((data) => {
 
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'Favcoin has been created successfully!',
-                        favcoin: data
+                        message: 'News has been created successfully!',
+                        news: data
                     })
                 })
                 .catch((error) => {
@@ -30,19 +30,19 @@ const FavcoinControllers = {
             })
         }
     },
-    async getFavcoin(req, res, next) {
+    async getNews(req, res, next) {
         try {
 
             // Fetch the data from the params
-            let { userId } = req.params
+            // let { userId } = req.params
 
             // call the get user function
-            FavcoinService.getFavcoin(userId)
+            NewsService.getNews()
                 .then((data) => {
 
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'User favourite coins have been fetched successfully!',
+                        message: 'News has been fetched successfully!',
                         user: data
                     })
                 })
@@ -61,4 +61,4 @@ const FavcoinControllers = {
     }
 }
 
-module.exports = FavcoinControllers
+module.exports = NewsControllers
