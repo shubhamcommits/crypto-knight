@@ -4,6 +4,7 @@ const TriggerControllers = require('./trigger.controllers')
 const FavcoinControllers = require('./favcoin.controllers')
 const PortfolioControllers = require('./portfolio.controllers')
 const NewsControllers = require('./news.controllers')
+const TransactionControllers = require('./transaction.controllers')
 
 module.exports = {
     AuthControllers,
@@ -11,5 +12,6 @@ module.exports = {
     TriggerControllers,
     FavcoinControllers,
     PortfolioControllers,
-    NewsControllers
+    NewsControllers,
+    TransactionControllers
 }

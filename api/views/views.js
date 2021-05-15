@@ -19,10 +19,10 @@ socket.on('globalUpdate', data => {
     // console.log(data)
 
 })
+console.log('getting')
+socket.emit('joinUser', '609fc55fb2748b197174d255')
 
-socket.emit('joinUser', '607f2513bac511573a70ff51')
-
-socket.emit('triggers', '607f2513bac511573a70ff51', 10000)
+socket.emit('triggers', '609fc55fb2748b197174d255', 10000)
 
 socket.on('triggersUpdate', data => {
     console.log(data)

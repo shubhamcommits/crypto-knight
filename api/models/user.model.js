@@ -64,6 +64,10 @@ const UserSchema = new Schema({
     portfolio: [{
         type: Schema.Types.ObjectId,
         ref: 'Portfolio'
+    }],
+    transaction: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction'
     }]
 })
 
