@@ -58,7 +58,7 @@ const PortfolioControllers = {
                 error: error
             })
         }
-    },
+    }
 }
 
 module.exports = PortfolioControllers
