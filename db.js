@@ -10,7 +10,7 @@ const  dbURL  = keys.MONGO_DB_URL || 'mongodb+srv://Advitya_Jagrik:Advaysood10@c
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 }
 
 // Connect mongoose to db
