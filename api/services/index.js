@@ -5,6 +5,7 @@ const TriggerService = require('./trigger.service')
 const FavcoinService = require('./favcoin.service')
 const PortfolioService = require('./portfolio.service')
 const NewsService = require('./news.service')
+const TransactionService = require('./transaction.service')
 
 module.exports = {
     AuthService,
@@ -13,5 +14,6 @@ module.exports = {
     TriggerService,
     FavcoinService,
     PortfolioService,
-    NewsService
+    NewsService,
+    TransactionService
 }

@@ -42,6 +42,25 @@ const TriggerService = {
             }
         })
 
+    },
+    async getTrigger(userId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                // Find the User
+                const trigger = await Trigger.find({
+                    _user: userId
+                })
+                .populate('trigger', 'name coin price condition notified')
+
+                // Resolve the promise
+                resolve(trigger)
+            } catch (error) {
+
+                // Catch the error and reject the promise
+                reject({ error: error })
+            }
+        })
     }
 }
 

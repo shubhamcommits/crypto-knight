@@ -1,4 +1,4 @@
-const { User, Portfolio } = require('../models')
+const { User, Portfolio, Transaction } = require('../models')
 
 const PortfolioService = {
 
@@ -25,7 +25,6 @@ const PortfolioService = {
 
                 // Push the portfolio object to the current user
                 user.portfolio.push(portfolio)
-
                 // Save the user object
                 user = await User.findByIdAndUpdate(
                     { _id: portfolioData.user },
