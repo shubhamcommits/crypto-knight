@@ -56,6 +56,18 @@ const UserSchema = new Schema({
     triggers: [{
         type: Schema.Types.ObjectId,
         ref: 'Trigger'
+    }],
+    favcoin: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Favcoin'
+    }],
+    portfolio: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Portfolio'
+    }],
+    transaction: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction'
     }]
 })
 

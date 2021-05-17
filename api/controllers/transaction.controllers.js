@@ -1,20 +1,20 @@
-const { TriggerService } = require('../services')
+const { TransactionService } = require('../services')
 
-const TriggerControllers = {
-    async createTrigger(req, res, next){
+const TransactionControllers = {
+    async createTransaction(req, res, next){
         try {
 
             // Fetch the data from the body
-            let { trigger } = req.body
+            let { transaction } = req.body
 
             // call the get user function
-            TriggerService.createTrigger(trigger)
+            TransactionService.createTransaction(transaction)
                 .then((data) => {
 
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'Trigger has been created successfully!',
-                        trigger: data
+                        message: 'Transaction has been created successfully!',
+                        transaction: data
                     })
                 })
                 .catch((error) => {
@@ -30,19 +30,19 @@ const TriggerControllers = {
             })
         }
     },
-    async getTrigger(req, res, next) {
+    async getTransaction(req, res, next) {
         try {
 
             // Fetch the data from the params
             let { userId } = req.params
 
             // call the get user function
-            TriggerService.getTrigger(userId)
+            TransactionService.getTransaction(userId)
                 .then((data) => {
 
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'User triggers have been fetched successfully!',
+                        message: 'User transaction has been fetched successfully!',
                         user: data
                     })
                 })
@@ -61,4 +61,4 @@ const TriggerControllers = {
     }
 }
 
-module.exports = TriggerControllers
+module.exports = TransactionControllers

@@ -16,12 +16,17 @@ socket.emit('global')
 
 socket.on('globalUpdate', data => {
 
-    console.log(data)
-    // const el = document.createElement('li');
-    // el.innerHTML = text;
-    // document.querySelector('ul').appendChild(el)
+    // console.log(data)
 
-});
+})
+console.log('getting')
+socket.emit('joinUser', '609fc55fb2748b197174d255')
+
+socket.emit('triggers', '609fc55fb2748b197174d255', 10000)
+
+socket.on('triggersUpdate', data => {
+    console.log(data)
+})
 
 document.querySelector('button').onclick = () => {
 

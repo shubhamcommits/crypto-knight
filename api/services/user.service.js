@@ -10,7 +10,7 @@ const UserService = {
                 const user = await User.findOne({
                     _id: userId
                 })
-                .populate('triggers', '_id name coin price condition')
+                .populate('triggers', '_id name coin price condition notified')
 
                 // Resolve the promise
                 resolve(user)

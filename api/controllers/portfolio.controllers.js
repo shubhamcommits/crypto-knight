@@ -1,20 +1,20 @@
-const { TriggerService } = require('../services')
+const { PortfolioService, TransactionService } = require('../services')
 
-const TriggerControllers = {
-    async createTrigger(req, res, next){
+const PortfolioControllers = {
+    async createPortfolio(req, res, next){
         try {
 
             // Fetch the data from the body
-            let { trigger } = req.body
+            let { portfolio } = req.body
 
             // call the get user function
-            TriggerService.createTrigger(trigger)
+            PortfolioService.createPortfolio(portfolio)
                 .then((data) => {
-
+                    TransactionService.createTransaction(portfolio)
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'Trigger has been created successfully!',
-                        trigger: data
+                        message: 'Portfolio has been created successfully!',
+                        portfolio: data
                     })
                 })
                 .catch((error) => {
@@ -30,20 +30,19 @@ const TriggerControllers = {
             })
         }
     },
-    async getTrigger(req, res, next) {
+    async getPortfolio(req, res, next) {
         try {
 
             // Fetch the data from the params
             let { userId } = req.params
 
             // call the get user function
-            TriggerService.getTrigger(userId)
+            PortfolioService.getPortfolio(userId)
                 .then((data) => {
-
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'User triggers have been fetched successfully!',
-                        user: data
+                        message: 'User portfolio has been fetched successfully!',
+                        portfolio: data
                     })
                 })
                 .catch((error) => {
@@ -61,4 +60,4 @@ const TriggerControllers = {
     }
 }
 
-module.exports = TriggerControllers
+module.exports = PortfolioControllers
