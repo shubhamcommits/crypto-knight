@@ -17,7 +17,8 @@ const TransactionService = {
                     price: transactionData.price,
                     quantity: transactionData.quantity,
                     totalinvestment: (transactionData.price*transactionData.quantity),
-                    transaction_date: transactionData.transaction_date
+                    transaction_date: transactionData.transaction_date,
+                    type: transactionData.type
                 }
 
                 // Create the new transaction

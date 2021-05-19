@@ -24,6 +24,14 @@ const TransactionSchema = new Schema({
     type: Number,
     default: 0
   },
+  avprice: {
+    type: Number,
+    default: 0
+  },
+  type: {
+    type: String,
+    default: null
+  },
   transaction_date: {
     type: Date,
     default: moment().format()
