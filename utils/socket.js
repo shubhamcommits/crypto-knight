@@ -59,11 +59,7 @@ const socket = {
                 })
                 // Create the trigger
                 socket.on('triggers', async (userId) => {
-
-                    io.sockets.in(`room_${userId}`).emit('triggersCheck',{
-                        message: `triggers are functional`
-                    })
-
+                    
                     setInterval(async () => {
 
                         // Find the user
