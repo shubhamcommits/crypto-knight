@@ -57,9 +57,8 @@ const socket = {
                         console.log('User has joined a new room: ', `room_${userId}`)
                     })
                 })
-
                 // Create the trigger
-                socket.on('triggers', async (userId, timeInterval) => {
+                socket.on('triggers', async (userId) => {
 
                     setInterval(async () => {
 
@@ -94,19 +93,19 @@ const socket = {
                                     if (condition == 'less') {
                                         if (setPrice > originalCoinPrice) {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
-                                                message: `Your condition ${triggers[index]['name']} for ${triggers[index]['price']} less than ${triggers[index]['price']} has been met.`
+                                                message: `Your condition ${triggers[index]['name']} for ${triggers[index]['coin']} less than ${triggers[index]['price']} has been met.`
                                             })
                                         }
                                     } else if (condition == 'greater') {
                                         if (setPrice < originalCoinPrice) {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
-                                                message: `Your condition ${triggers[index]['name']} for ${triggers[index]['price']} more than ${triggers[index]['price']} has been met.`
+                                                message: `Your condition ${triggers[index]['name']} for ${triggers[index]['coin']} more than ${triggers[index]['price']} has been met.`
                                             })
                                         }
                                     } else if (condition == 'equal') {
                                         if (setPrice == originalCoinPrice) {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
-                                                message: `Your condition ${triggers[index]['name']} for ${triggers[index]['price']} equal to ${triggers[index]['price']} has been met.`
+                                                message: `Your condition ${triggers[index]['name']} for ${triggers[index]['coin']} equal to ${triggers[index]['price']} has been met.`
                                             })
                                         }
                                     }
@@ -122,7 +121,7 @@ const socket = {
 
                         }
 
-                    }, timeInterval)
+                    }, 10000)
                 })
 
                 // On Disconnecting the socket

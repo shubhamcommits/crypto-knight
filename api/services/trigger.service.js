@@ -51,7 +51,7 @@ const TriggerService = {
                 const trigger = await Trigger.find({
                     _user: userId
                 })
-                .populate('trigger', 'name coin price condition notified')
+                .populate('trigger', 'name coin price condition notified created_date')
 
                 // Resolve the promise
                 resolve(trigger)
