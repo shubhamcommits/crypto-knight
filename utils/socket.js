@@ -44,7 +44,7 @@ const socket = {
 
                         // Emit the message from the socket
                         io.emit('globalUpdate', coins)
-                    }, 3000)
+                    }, 30000)
                 })
 
                 // Join user on private user room
@@ -59,6 +59,10 @@ const socket = {
                 })
                 // Create the trigger
                 socket.on('triggers', async (userId) => {
+
+                    io.sockets.in(`room_${userId}`).emit('triggersCheck',{
+                        message: `triggers are functional`
+                    })
 
                     setInterval(async () => {
 
@@ -80,7 +84,7 @@ const socket = {
 
                                 // Get current coin details
                                 let coinDetails = await CoinService.getCurrentCoinPrice(triggers[index]['coin'])
-                                let originalCoinPrice = coinDetails['market_data']['current_price']['inr']
+                                let originalCoinPrice = coinDetails['market_data']['current_price']['usd']
 
                                 // Fetch the condition and set price
                                 let condition = triggers[index]['condition']
@@ -89,7 +93,6 @@ const socket = {
                                 if (triggers[index]['notified'] == false) {
 
                                     // Check for the conditions
-                                    //Your condition <name if condition>for <coin> for price <conditoon(less/greater/equal> than <price> has been met
                                     if (condition == 'less') {
                                         if (setPrice > originalCoinPrice) {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
@@ -121,7 +124,7 @@ const socket = {
 
                         }
 
-                    }, 10000)
+                    }, 30000)
                 })
 
                 // On Disconnecting the socket
