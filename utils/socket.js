@@ -5,6 +5,9 @@ const { User, Trigger } = require('../api/models')
 // Maintains the count of all the connected users
 const globalConnections = []
 
+// Coins array
+let coins = []
+
 const socket = {
 
     async init(server) {
@@ -30,17 +33,17 @@ const socket = {
                 // Turn on the sockets
                 socket.on('global', async () => {
 
-                    // Fetch the data
-                    let coins = await CoinService.realTimeCoinPrices()
+                    // // Fetch the data
+                    // let coins = await CoinService.realTimeCoinPrices()
 
-                    // Emit the message from the socket
-                    io.emit('globalUpdate', coins)
+                    // // Emit the message from the socket
+                    // io.emit('globalUpdate', coins)
 
                     // Call the update
                     setInterval(async () => {
 
                         // Fetch the data
-                        let coins = await CoinService.realTimeCoinPrices()
+                        coins = await CoinService.realTimeCoinPrices()
 
                         // Emit the message from the socket
                         io.emit('globalUpdate', coins)
@@ -76,11 +79,11 @@ const socket = {
                             triggers = user.triggers
 
                             // Loop out through each trigger
-                            for (let index = 0; index < triggers.length; index++) {
+                            for (let index = 0; index < triggers.length && coins.length > 0; index++) {
 
                                 // Get current coin details
-                                let coinDetails = await CoinService.getCurrentCoinPrice(triggers[index]['coin'])
-                                let originalCoinPrice = coinDetails['market_data']['current_price']['usd']
+                                let coinDetails = coins.find((coin) => coin.id === triggers[index]['coin'])
+                                let originalCoinPrice = coinDetails['current_price']
 
                                 // Fetch the condition and set price
                                 let condition = triggers[index]['condition']
@@ -120,7 +123,7 @@ const socket = {
 
                         }
 
-                    }, 30000)
+                    }, 10000)
                 })
 
                 // On Disconnecting the socket
