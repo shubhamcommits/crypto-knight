@@ -37,7 +37,7 @@ const socket = {
                     // let coins = await CoinService.realTimeCoinPrices()
 
                     // // Emit the message from the socket
-                    // io.emit('globalUpdate', coins)
+                    io.emit('globalUpdate', coins)
 
                     // Call the update
                     setInterval(async () => {
