@@ -34,7 +34,7 @@ const socket = {
                 socket.on('global', async () => {
 
                     // // Fetch the data
-                    // let coins = await CoinService.realTimeCoinPrices()
+                    coins = await CoinService.realTimeCoinPrices()
 
                     // // Emit the message from the socket
                     io.emit('globalUpdate', coins)
