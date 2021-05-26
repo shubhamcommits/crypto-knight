@@ -43,7 +43,7 @@ const NewsControllers = {
                     // Send Status 200 response
                     return res.status(200).json({
                         message: 'News has been fetched successfully!',
-                        user: data
+                        news: data
                     })
                 })
                 .catch((error) => {

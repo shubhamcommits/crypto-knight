@@ -13,7 +13,7 @@ const FavcoinSchema = new Schema({
     ref: 'User'
   },
   coinid: {
-    type: String,
+    type: Array,
     default: null
   }
 })
