@@ -31,7 +31,7 @@ const TriggerService = {
                     { $push: { triggers: trigger } },
                     { new: true }
                 )
-                .populate('triggers', '_id name coin price condition')
+                .populate('triggers', '_id name coin price condition notified')
 
                 // Resolve the user
                 resolve(user)

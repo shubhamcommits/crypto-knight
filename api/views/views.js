@@ -1,4 +1,4 @@
-const socket = io('ws://localhost:3000', {
+const socket = io('ws://3.142.189.81', {
     secure: true,
     reconnection: true,
     reconnectionAttempts: Infinity,
@@ -16,13 +16,12 @@ socket.emit('global')
 
 socket.on('globalUpdate', data => {
 
-    // console.log(data)
+    console.log(data)
 
 })
-console.log('getting')
-socket.emit('joinUser', '609d2e63e176b7b6b0791e73')
+socket.emit('joinUser', '607f2513bac511573a70ff51')
 
-socket.emit('triggers', '609d2e63e176b7b6b0791e73')
+socket.emit('triggers', '607f2513bac511573a70ff51')
 
 socket.on('triggersUpdate', data => {
     console.log(data)
