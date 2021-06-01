@@ -5,7 +5,7 @@ const keys = require('./keys')
 mongoose.Promise = global.Promise
 
 // Set up mongoose connection
-const  dbURL  = keys.MONGO_DB_URL || 'mongodb+srv://Advitya_Jagrik:Advaysood10@cluster-jagrik.bk8kn.mongodb.net/CryptoKnight?retryWrites=true&w=majority'
+const  dbURL  = keys.MONGO_DB_URL || 'mongodb+srv://Advitya_Jagrik:Advaysood10x@cluster-jagrik.bk8kn.mongodb.net/CryptoKnight?retryWrites=true&w=majority'
 
 const options = {
   useNewUrlParser: true,

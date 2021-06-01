@@ -15,7 +15,8 @@ const FileHandler = {
                 let fileName = ''
 
                 fileName += Date.now().toString() + '_' + req['files'].image['name']
-
+                
+                req['files']['image']['name'] = fileName
                 // Modify the file accordingly and handle request
                 file.mv(folder + fileName, (error) => {
                     if (error) {

@@ -23,6 +23,24 @@ const UserService = {
         })
     },
 
+    async getAllUser() {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                // Find the User
+                const user = await User.find()
+                .populate('triggers', '_id name coin price condition notified')
+
+                // Resolve the promise
+                resolve(user)
+
+            } catch (error) {
+
+                // Catch the error and reject the promise
+                reject({ error: error })
+            }
+        })
+    },
     async updateUser(userId, userData) {
         return new Promise(async (resolve, reject) => {
             try {

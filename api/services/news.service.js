@@ -2,7 +2,7 @@ const { News } = require('../models')
 
 const NewsService = {
 
-    async createNews(newsData) {
+    async createNews(newsData, filename) {
         return new Promise(async (resolve, reject) => {
             try {
 
@@ -12,6 +12,7 @@ const NewsService = {
                     desc: newsData.desc,
                     category: newsData.category,
                     coinid: newsData.coinid,
+                    image: filename
                 }
 
                 // Create the new News
