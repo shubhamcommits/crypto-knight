@@ -19,6 +19,10 @@ const NewsSchema = new Schema({
   coinid: {
     type: String,
     default: null
+  },
+  image: {
+    type: String,
+    default: null
   }
 })
 

@@ -2,13 +2,16 @@ const { NewsService } = require('../services')
 
 const NewsControllers = {
     async createNews(req, res, next){
+        // console.log(req.file)
         try {
 
             // Fetch the data from the body
-            let { news } = req.body
+            // let { news } = req.body
+            console.log(req.body)
+            let filename  = req.files.image.name
 
             // call the get user function
-            NewsService.createNews(news)
+            NewsService.createNews(req.body, filename)
                 .then((data) => {
 
                     // Send Status 200 response
