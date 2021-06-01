@@ -5,7 +5,7 @@ const { Schema } = mongoose
 
 const FavcoinSchema = new Schema({
   name: {
-    type: Array,
+    type: String,
     default: null
   },
   _user: {
@@ -13,7 +13,7 @@ const FavcoinSchema = new Schema({
     ref: 'User'
   },
   coinid: {
-    type: String,
+    type: Array,
     default: null
   }
 })

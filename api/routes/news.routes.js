@@ -6,5 +6,6 @@ const { FileHandler } = require('../../utils')
 
 router.post('/', FileHandler.uploadFile, NewsControllers.createNews)
 router.get('/', NewsControllers.getNews)
+router.get('/filter', NewsControllers.getFilteredNews)
 
 module.exports = router
