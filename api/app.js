@@ -31,7 +31,7 @@ if (!fs.existsSync(dir)) {
 // Set file upload middleware
 app.use(fileUpload({
     limits: {
-        fileSize: 1024 * 1024 * 1024
+        fileSize: 10000000 //1mb
     },
     abortOnLimit: true
 }))
