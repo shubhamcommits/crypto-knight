@@ -56,6 +56,23 @@ const NewsService = {
             }
         })
     },
+    async getFilteredNews(query) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                // Find the User
+                const news = await News.find(query)
+                .populate('news', 'title desc category coinid')
+
+                // Resolve the promise
+                resolve(news)
+            } catch (error) {
+
+                // Catch the error and reject the promise
+                reject({ error: error })
+            }
+        })
+    },
 }
 
 
