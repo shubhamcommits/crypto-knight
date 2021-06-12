@@ -1,27 +1,29 @@
-const { News } = require('../models')
+const { Tips } = require('../models')
 
-const NewsService = {
+const TipsService = {
 
-    async createNews(newsData, filename) {
+    async createTips(tipsData, filename) {
         return new Promise(async (resolve, reject) => {
             try {
 
-                console.log('hello2', newsData, filename)
+                console.log('hello2', tipsData, filename)
                 // User Data
                 let data = {
-                    title: newsData.title,
-                    desc: newsData.desc,
-                    category: newsData.category,
-                    coinid: newsData.coinid,
-                    image: filename
+                    name: tipsData.name,
+                    type: tipsData.type,
+                    target: tipsData.target,
+                    entry_1: tipsData.entry_1,
+                    stop_loss: tipsData.stop_loss,
+                    entry_2: tipsData.entry_2,
+                    expected_return: ((tipsData.target-tipsData.entry_1)/tipsData.entry_1)*100
                 }
 
-                // Create the new News
-                let news = await News.create(data)
+                // Create the new Tips
+                let tips = await Tips.create(data)
 
                 // If user is not created
-                if (!news) {
-                    reject({ error: 'News was not created.' })
+                if (!tips) {
+                    reject({ error: 'Tips was not created.' })
                 }
 
                 // Sign In the current user
@@ -29,7 +31,7 @@ const NewsService = {
 
                 // Resolve the promise
                 resolve({
-                    news: res.news
+                    tips: res.tips
                 })
 
 
@@ -40,16 +42,16 @@ const NewsService = {
             }
         })
     },
-    async getNews() {
+    async getTips() {
         return new Promise(async (resolve, reject) => {
             try {
 
                 // Find the User
-                const news = await News.find()
-                .populate('news', 'title desc category coinid')
+                const tips = await Tips.find()
+                .populate('tips', 'name title target entry_1 entry_2 stop_loss expected_return')
 
                 // Resolve the promise
-                resolve(news)
+                resolve(tips)
             } catch (error) {
 
                 // Catch the error and reject the promise
@@ -57,16 +59,16 @@ const NewsService = {
             }
         })
     },
-    async getFilteredNews(query) {
+    async getFilteredTips(query) {
         return new Promise(async (resolve, reject) => {
             try {
 
                 // Find the User
-                const news = await News.find(query)
-                .populate('news', 'title desc category coinid')
+                const tips = await Tips.find(query)
+                .populate('tips', 'name title target entry_1 entry_2 stop_loss expected_return')
 
                 // Resolve the promise
-                resolve(news)
+                resolve(tips)
             } catch (error) {
 
                 // Catch the error and reject the promise
@@ -77,4 +79,4 @@ const NewsService = {
 }
 
 
-module.exports = NewsService
+module.exports = TipsService

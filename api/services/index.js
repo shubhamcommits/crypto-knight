@@ -6,6 +6,7 @@ const FavcoinService = require('./favcoin.service')
 const PortfolioService = require('./portfolio.service')
 const NewsService = require('./news.service')
 const TransactionService = require('./transaction.service')
+const TipsService = require('./tips.service')
 
 module.exports = {
     AuthService,
@@ -15,5 +16,6 @@ module.exports = {
     FavcoinService,
     PortfolioService,
     NewsService,
-    TransactionService
+    TransactionService,
+    TipsService
 }
