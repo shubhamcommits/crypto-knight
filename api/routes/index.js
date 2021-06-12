@@ -5,6 +5,7 @@ const FavcoinRoutes = require('./favcoin.routes')
 const PortfolioRoutes = require('./portfolio.routes')
 const NewsRoutes = require('./news.routes')
 const TransactionRoutes = require('./transaction.routes')
+const TipsRoutes = require('./tips.routes')
 
 module.exports = {
     AuthRoutes,
@@ -13,5 +14,6 @@ module.exports = {
     FavcoinRoutes,
     PortfolioRoutes,
     NewsRoutes,
-    TransactionRoutes
+    TransactionRoutes,
+    TipsRoutes
 }

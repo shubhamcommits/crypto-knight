@@ -1,12 +1,12 @@
-const { NewsService } = require('../services')
+const { TipsService } = require('../services')
 
-const NewsControllers = {
-    async createNews(req, res, next){
+const TipsControllers = {
+    async createTips(req, res, next){
         // console.log(req.file)
         try {
             let filename= 'xyz';
             // Fetch the data from the body
-            // let { news } = req.body
+            // let { tips } = req.body
             console.log('hello',req.body)
             if(req.files){
                 filename  = req.files.image.name
@@ -16,12 +16,12 @@ const NewsControllers = {
             
 
             // call the get user function
-            NewsService.createNews(req.body, filename)
+            TipsService.createTips(req.body, filename)
                 .then((data) => {
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'News has been created successfully!',
-                        news: data
+                        message: 'Tips has been created successfully!',
+                        tips: data
                     })
                 })
                 .catch((error) => {
@@ -38,19 +38,19 @@ const NewsControllers = {
         }
     },
 
-    async getNews(req, res, next) {
+    async getTips(req, res, next) {
         try {
 
             // Fetch the data from the params
             // let { userId } = req.params
 
             // call the get user function
-            NewsService.getNews()
+            TipsService.getTips()
                 .then((data) => {
 
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'News has been fetched successfully!',
+                        message: 'Tips has been fetched successfully!',
                         user: data
                     })
                 })
@@ -68,7 +68,7 @@ const NewsControllers = {
         }
     },
 
-    async getFilteredNews(req, res, next) {
+    async getFilteredTips(req, res, next) {
         console.log('reached')
         try {
 
@@ -77,12 +77,12 @@ const NewsControllers = {
             console.log(req.query)
 
             // call the get user function
-            NewsService.getFilteredNews(req.query)
+            TipsService.getFilteredTips(req.query)
                 .then((data) => {
 
                     // Send Status 200 response
                     return res.status(200).json({
-                        message: 'News has been fetched successfully!',
+                        message: 'Tips has been fetched successfully!',
                         user: data
                     })
                 })
@@ -101,4 +101,4 @@ const NewsControllers = {
     }
 }
 
-module.exports = NewsControllers
+module.exports = TipsControllers
