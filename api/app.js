@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const express = require('express')
 const compression = require('compression')
 const fileUpload = require('express-fileupload')
-const { AuthRoutes, UserRoutes, TriggerRoutes, FavcoinRoutes, PortfolioRoutes, NewsRoutes, TransactionRoutes } = require('./routes')
+const { AuthRoutes, UserRoutes, TriggerRoutes, FavcoinRoutes, PortfolioRoutes, NewsRoutes, TransactionRoutes, TipsRoutes } = require('./routes')
 
 // Define the express application
 const app = express()
@@ -44,6 +44,7 @@ app.use('/api/favcoin', FavcoinRoutes)
 app.use('/api/portfolio', PortfolioRoutes)
 app.use('/api/news', NewsRoutes)
 app.use('/api/transaction', TransactionRoutes)
+app.use('/api/tips', TipsRoutes)
 
 // Availing the static uploads folder to access from server
 app.use('/uploads', express.static(keys.FILE_UPLOADS_FOLDER))
