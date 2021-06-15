@@ -1,6 +1,7 @@
 const { PortfolioService, TransactionService } = require('../services')
 
 const PortfolioControllers = {
+    
     async createPortfolio(req, res, next){
         try {
 
@@ -42,6 +43,34 @@ const PortfolioControllers = {
                     // Send Status 200 response
                     return res.status(200).json({
                         message: 'User portfolio has been fetched successfully!',
+                        portfolio: data
+                    })
+                })
+                .catch((error) => {
+                    return res.status(500).json({
+                        message: 'Internal server error!',
+                        error: error
+                    })
+                })
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal server error!',
+                error: error
+            })
+        }
+    },
+    async getPortfolioValue(req, res, next) {
+        try {
+
+            // Fetch the data from the params
+            let { userId } = req.params
+
+            // call the get user function
+            PortfolioService.getPortfolioValue(userId)
+                .then((data) => {
+                    // Send Status 200 response
+                    return res.status(200).json({
+                        message: 'User portfolio value has been fetched successfully!',
                         portfolio: data
                     })
                 })

@@ -23,8 +23,8 @@ const getCurrentCoinPrice = async (coinId) => {
     try {
 
       let coin = await axios.get(process.env.COIN_DETAILS + coinId)
-
-      resolve(coin.data || [])
+      // console.log('coin',coin.data.market_data.current_price.inr)
+      resolve(coin.data.market_data.current_price.inr)
 
     } catch (error) {
 

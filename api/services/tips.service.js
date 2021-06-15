@@ -8,16 +8,30 @@ const TipsService = {
 
                 console.log('hello2', tipsData, filename)
                 // User Data
-                let data = {
+                let data= {};
+                if(tipsData.type === 'Sell'){
+                     data = {
+                        name: tipsData.name,
+                        type: tipsData.type,
+                        target: tipsData.target,
+                        entry_1: tipsData.entry_1,
+                        stop_loss: tipsData.stop_loss,
+                        entry_2: tipsData.entry_2,
+                        expected_return: ((tipsData.entry_1 - tipsData.target)/tipsData.entry_1)*100,
+                    }
+                }
+                else{
+                 data = {
                     name: tipsData.name,
                     type: tipsData.type,
                     target: tipsData.target,
                     entry_1: tipsData.entry_1,
                     stop_loss: tipsData.stop_loss,
                     entry_2: tipsData.entry_2,
-                    expected_return: ((tipsData.target-tipsData.entry_1)/tipsData.entry_1)*100
+                    expected_return: ((tipsData.target-tipsData.entry_1)/tipsData.entry_1)*100,
                 }
-
+            }
+                
                 // Create the new Tips
                 let tips = await Tips.create(data)
 
