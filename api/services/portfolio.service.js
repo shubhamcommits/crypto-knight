@@ -103,41 +103,14 @@ const PortfolioService = {
   async getPortfolio(userId) {
       return new Promise(async (resolve, reject) => {
           try {
-            let investedvalue = 0;
-            let currentvalue = 0;
-            let coinvalue = 0;
-            // let totalgain = ((currentvalue - investedvalue)/investedvalue) *100;
-            let URL= 'https://api.coingecko.com/api/v3/coins/';
               // Find the User
               const portfolio = await Portfolio.find({
                   _user: userId
               })
               .populate('portfolio', 'coinid price quantity totalinvestment');
 
-              for (let index = 0; index < portfolio.length; index++) {
-                  console.log('index',portfolio[index].coinid,'+', portfolio.length, index)
-                  investedvalue = investedvalue + portfolio[index].totalinvestment;
-                  coinvalue = await CoinService.getCurrentCoinPrice(portfolio[index].coinid).then((values) => {
-                                // console.log("values", values)
-                                return values
-                        }).catch(e => console.error(e));
-                        // console.log('coinvalue',portfolio[index].quantity)
-                  currentvalue = coinvalue * portfolio[index].quantity + currentvalue;
-                  // console.log('cv', currentvalue)
-                  // coindata = await axios.get(process.env.URL+element.coinid)
-                  // console.log(URL/element.coinid)
-                };
-
-              console.log('invested value',investedvalue,'currentvalue',currentvalue)
-              let totalgain = ((currentvalue - investedvalue)/investedvalue) *100
-              let portfoliovalue = {
-                totalgain: totalgain,
-                investedvalue: investedvalue,
-                currentvalue: currentvalue
-              };
               // Resolve the promise
-              
-              resolve(portfoliovalue)
+              resolve(portfolio)
           } catch (error) {
             
               // Catch the error and reject the promise
@@ -168,15 +141,18 @@ const PortfolioService = {
                             return values
                           }).catch(e => console.error(e));
               currentvalue = coinvalue * portfolio[index].quantity + currentvalue;
-              
+
             };
 
             //Calculate gain %
-            let totalgain = ((currentvalue - investedvalue)/investedvalue) *100
+            let totalgainpercent = ((currentvalue - investedvalue)/investedvalue) *100
+            //Calculate gain absolute
+            let totalgain = (currentvalue - investedvalue)
 
             //Declare portfoliovalue variable
             let portfoliovalue = {
               totalgain: totalgain,
+              totalgainpercent: totalgainpercent,
               investedvalue: investedvalue,
               currentvalue: currentvalue
             };
