@@ -1,4 +1,6 @@
 const { User, Portfolio, Transaction } = require("../models");
+const axios = require('axios')
+const CoinService = require('./coin.service')
 
 const PortfolioService = {
   async createPortfolio(portfolioData) {
@@ -101,22 +103,69 @@ const PortfolioService = {
   async getPortfolio(userId) {
       return new Promise(async (resolve, reject) => {
           try {
-
               // Find the User
               const portfolio = await Portfolio.find({
                   _user: userId
               })
-              .populate('portfolio', 'coinid price quantity totalinvestment')
+              .populate('portfolio', 'coinid price quantity totalinvestment');
 
               // Resolve the promise
               resolve(portfolio)
           } catch (error) {
-
+            
               // Catch the error and reject the promise
               reject({ error: error })
           }
       })
   },
+
+  async getPortfolioValue(userId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+          
+          //Declare Variables
+          let investedvalue = 0;
+          let currentvalue = 0;
+          let coinvalue = 0;
+          
+          // Find the User
+          const portfolio = await Portfolio.find({
+              _user: userId
+          })
+          .populate('portfolio', 'coinid price quantity totalinvestment');
+
+          for (let index = 0; index < portfolio.length; index++) {
+
+              investedvalue = investedvalue + portfolio[index].totalinvestment;
+              coinvalue = await CoinService.getCurrentCoinPrice(portfolio[index].coinid).then((values) => {
+                            return values
+                          }).catch(e => console.error(e));
+              currentvalue = coinvalue * portfolio[index].quantity + currentvalue;
+
+            };
+
+            //Calculate gain %
+            let totalgainpercent = ((currentvalue - investedvalue)/investedvalue) *100
+            //Calculate gain absolute
+            let totalgain = (currentvalue - investedvalue)
+
+            //Declare portfoliovalue variable
+            let portfoliovalue = {
+              totalgain: totalgain,
+              totalgainpercent: totalgainpercent,
+              investedvalue: investedvalue,
+              currentvalue: currentvalue
+            };
+
+            // Resolve the promise
+            resolve(portfoliovalue)
+        } catch (error) {
+          
+            // Catch the error and reject the promise
+            reject({ error: error })
+        }
+    })
+},
 };
 
 module.exports = PortfolioService;
