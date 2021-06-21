@@ -44,7 +44,7 @@ function sendSms(phoneNumber, subject, body) {
             console.log(err, err.stack)
         }
         else {
-            console.log(data)
+            console.log('data', data)
         }
     })
 }

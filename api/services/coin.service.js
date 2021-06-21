@@ -35,7 +35,27 @@ const getCurrentCoinPrice = async (coinId) => {
   })
 }
 
+const getCurrentCoinDetail = async (coinId) => {
+  console.log('inside coin service')
+  return new Promise(async (resolve, reject) => {
+    try {
+
+      let coin = await axios.get(process.env.COIN_DETAILS + coinId)
+      // console.log('coin',coin.data.market_data.current_price.inr)
+      resolve(coin.data)
+
+    } catch (error) {
+
+      console.error(error)
+      reject([])
+
+    }
+  })
+}
+
+
 module.exports = {
   realTimeCoinPrices,
-  getCurrentCoinPrice
+  getCurrentCoinPrice,
+  getCurrentCoinDetail
 }

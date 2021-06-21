@@ -86,6 +86,34 @@ const PortfolioControllers = {
                 error: error
             })
         }
+    },
+    async getPortfolioDetail(req, res, next) {
+        try {
+            console.log('oinside contoller')
+            // Fetch the data from the params
+            let { coinId } = req.params
+
+            // call the get user function
+            PortfolioService.getPortfolioDetail(coinId)
+                .then((data) => {
+                    // Send Status 200 response
+                    return res.status(200).json({
+                        message: 'User portfolio value has been fetched successfully!',
+                        portfolio: data
+                    })
+                })
+                .catch((error) => {
+                    return res.status(500).json({
+                        message: 'Internal server error!',
+                        error: error
+                    })
+                })
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal server error!',
+                error: error
+            })
+        }
     }
 }
 
