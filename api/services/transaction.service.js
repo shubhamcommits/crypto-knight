@@ -6,7 +6,7 @@ const TransactionService = {
 
         return new Promise(async (resolve, reject) => {
             try {
-
+                console.log('in transaction')
                 // Create a new user
                 let user = await User.findById(transactionData.user)
 

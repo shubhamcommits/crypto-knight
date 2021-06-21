@@ -32,6 +32,10 @@ const PortfolioSchema = new Schema({
     type: String,
     default: null
   },
+  realized_profit: {
+    type: Number,
+    default: 0
+  },
   transaction_date: {
     type: Date,
     default: moment().format()
