@@ -14,7 +14,8 @@ const keys = {
     FILE_UPLOADS_FOLDER: path.join(__dirname, './uploads/'),
     ACCESS_KEY: process.env.ACCESS_KEY,
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
-    REGION: process.env.REGION
+    REGION: process.env.REGION,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY
 }
 
 // Export the keys

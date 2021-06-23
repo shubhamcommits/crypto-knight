@@ -68,7 +68,14 @@ const UserSchema = new Schema({
     transaction: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction'
-    }]
+    }],
+    reset_password_token: {
+        type: String,
+      },
+    reset_password_expires: {
+        type: Date,
+        default: null,
+    },
 })
 
 const User = mongoose.model('User', UserSchema)
