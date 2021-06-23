@@ -21,6 +21,7 @@ const PortfolioService = {
             quantity: portfolioData.quantity,
             totalinvestment: portfolioData.price * portfolioData.quantity,
             avprice: portfolioData.price,
+            realized_profit: 0,
             type: "invest",
           };
 
@@ -41,22 +42,20 @@ const PortfolioService = {
 
           // Resolve the user
           resolve(user);
-        } else if (portfoliotrue) {
+        } else 
+        if (portfoliotrue) {
           let newquantity = 0;
           let newinvestment = 0;
           let newavprice = 0;
+          // let realized_profit = 0;
           if (portfolioData.type === "buy") {
             console.log('buying now')
             newquantity = portfoliotrue.quantity + portfolioData.quantity;
             newinvestment = portfoliotrue.totalinvestment + portfolioData.price * portfolioData.quantity;
             newavprice = newinvestment / newquantity;
+            new_realized_profit = portfoliotrue.realized_profit;
           }
           if (portfolioData.type === "sell") {
-
-            // currentcoinprice = await CoinService.getCurrentCoinPrice(portfolioData.coinid).then((values) => {
-            //   // console.log(values)
-            //   return values
-            // }).catch(e => console.error(e));
 
             newquantity = portfoliotrue.quantity - portfolioData.quantity;
             newinvestment = portfoliotrue.avprice*newquantity;
@@ -75,7 +74,7 @@ const PortfolioService = {
             {
               quantity: newquantity,
               totalinvestment: newinvestment,
-              // avprice: newavprice,
+              avprice: newavprice,
               realized_profit: new_realized_profit,
             }
           );
