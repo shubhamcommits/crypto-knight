@@ -85,6 +85,38 @@ const AuthControllers = {
                 error: error
             })
         }
+    },
+    
+    async forgotPassword(req, res, next) {
+        try {
+
+            // Fetch the data from the request body
+            const { email } = req.body
+
+            // Call the signUp function
+            AuthService.forgotPassword(email)
+                .then((data) => {
+
+                    // Send Status 200 response
+                    return res.status(200).json({
+                        message: 'Password scene'
+                        // user: data.user,
+                        // token: data.token
+                    })
+                })
+                .catch((error) => {
+                    return res.status(500).json({
+                        message: 'Internal server error!',
+                        error: error
+                    })
+                })
+
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal server error!',
+                error: error
+            })
+        }
     }
 }
 
