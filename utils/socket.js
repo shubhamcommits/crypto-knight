@@ -69,6 +69,10 @@ const socket = {
                         let user = await User.findById(userId)
                             .populate('triggers', '_id name coin price condition notified')
 
+                        // Catching exception
+                        if(user.triggers === null)
+                            user.triggers = []
+
                         // Create triggers array
                         let triggers = []
 
