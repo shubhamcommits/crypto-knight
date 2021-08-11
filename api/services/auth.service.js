@@ -109,6 +109,25 @@ const AuthService = {
                 // Sign In the current user
                 let res = await this.signIn(userData.email, userData.password)
 
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+                const msg = {
+                    to: email, // Change to your recipient
+                    from: 'info@coingale.org', // Change to your verified sender
+                    subject: 'Welcome to Coingale ',
+                    text: 'Welcome to Coingale',
+                    html:   `<div>
+                            <h2 style="text-transform: capitalize;">Hi ${user.first_name}!,</h2>
+                            <p>Welcome to Coingale.</p>
+                            <p>It is a pleasure having you on board</p> 
+                            </div>`,
+                  }
+                // console.log('msg', msg)
+                                        
+                sgMail
+                .send(msg)
+                .then((response) =>console.log('Email sent'))
+                .catch((error) => console.error(error));
                 // Resolve the promise
                 resolve({
                     user: res.user,
@@ -154,10 +173,42 @@ const AuthService = {
           }
         // console.log('msg', msg)
                                 
-                    sgMail
-                    .send(msg)
-                    .then((response) =>console.log('Email sent'))
-                    .catch((error) => console.error(error));
+        sgMail
+        .send(msg)
+        .then((response) =>console.log('Email sent'))
+        .catch((error) => console.error(error));
+    
+             return 'Emails sent successfully!';
+        
+    },
+
+    async sendEmail(email,message) {
+        // console.log(email);
+        let user = await User.findOne({ email });
+          
+        if (!user) {
+        return "No user with that email"
+        }
+
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    
+        // console.log(url);
+        // console.log('inside email', email, user.first_name)
+        const msg = {
+            to: email, // Change to your recipient
+            from: 'info@coingale.org', // Change to your verified sender
+            subject: 'Your Trigger has been Met',
+            text: 'Your Trigger Condition has been met',
+            html:   `<div>
+                    <h2 style="text-transform: capitalize;">Hi ${user.first_name}!,</h2>
+                    <p>Your Trigger Condition of ${message} has been met,</p>`,
+          }
+        // console.log('msg', msg)
+                                
+        sgMail
+        .send(msg)
+        .then((response) =>console.log('Email sent'))
+        .catch((error) => console.error(error));
     
              return 'Emails sent successfully!';
         
