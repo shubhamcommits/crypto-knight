@@ -163,6 +163,38 @@ const AuthService = {
         
     },
 
+    async sendEmail(email,message) {
+        console.log('emailller',email);
+        let user = await User.findOne({ email });
+          
+        if (!user) {
+        return "No user with that email"
+        }
+
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    
+        // console.log(url);
+        // console.log('inside email', email, user.first_name)
+        const msg = {
+            to: email, // Change to your recipient
+            from: 'info@coingale.org', // Change to your verified sender
+            subject: 'Your Trigger has been Met',
+            text: 'Your Trigger Condition has been met',
+            html:   `<div>
+                    <h2 style="text-transform: capitalize;">Hi ${user.first_name}!,</h2>
+                    <p>Your Trigger Condition of ${message} has been met,</p>`,
+          }
+        console.log('msg', msg)
+                                
+        sgMail
+        .send(msg)
+        .then((response) =>console.log('Email sent'))
+        .catch((error) => console.error(error));
+    
+             return 'Emails sent successfully!';
+        
+    },
+    
     async createToken({ password: passwordHash, _id: userId, created_date }){
 
         // console.log('how does it work', passwordHash,'-',created_date)
