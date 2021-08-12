@@ -109,25 +109,25 @@ const AuthService = {
                 // Sign In the current user
                 let res = await this.signIn(userData.email, userData.password)
 
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-                const msg = {
-                    to: email, // Change to your recipient
-                    from: 'info@coingale.org', // Change to your verified sender
-                    subject: 'Welcome to Coingale ',
-                    text: 'Welcome to Coingale',
-                    html:   `<div>
-                            <h2 style="text-transform: capitalize;">Hi ${user.first_name}!,</h2>
-                            <p>Welcome to Coingale.</p>
-                            <p>It is a pleasure having you on board</p> 
-                            </div>`,
-                  }
-                // console.log('msg', msg)
+                // const msg = {
+                //     to: email, // Change to your recipient
+                //     from: 'info@coingale.org', // Change to your verified sender
+                //     subject: 'Welcome to Coingale ',
+                //     text: 'Welcome to Coingale',
+                //     html:   `<div>
+                //             <h2 style="text-transform: capitalize;">Hi ${user.first_name}!,</h2>
+                //             <p>Welcome to Coingale.</p>
+                //             <p>It is a pleasure having you on board</p> 
+                //             </div>`,
+                //   }
+                // // console.log('msg', msg)
                                         
-                sgMail
-                .send(msg)
-                .then((response) =>console.log('Email sent'))
-                .catch((error) => console.error(error));
+                // sgMail
+                // .send(msg)
+                // .then((response) =>console.log('Email sent'))
+                // .catch((error) => console.error(error));
                 // Resolve the promise
                 resolve({
                     user: res.user,
