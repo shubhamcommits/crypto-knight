@@ -38,8 +38,9 @@ const AuthControllers = {
 
             // Fetch the data from the request body
             const { phoneNumber, email, subject, message } = req.body
-
+            console.log('logger')
             AuthService.sendEmail(email,message)
+
             // Call the send message function
             SNS.sendSms(phoneNumber, subject, message)
 
