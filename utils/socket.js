@@ -62,12 +62,16 @@ const socket = {
                 })
                 // Create the trigger
                 socket.on('triggers', async (userId) => {
-                    
+
                     setInterval(async () => {
 
                         // Find the user
                         let user = await User.findById(userId)
                             .populate('triggers', '_id name coin price condition notified')
+
+                        // Catching exception
+                        if (user.triggers === null)
+                            user.triggers = []
 
                         // Create triggers array
                         let triggers = []
@@ -97,26 +101,38 @@ const socket = {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
                                                 message: `Your condition ${triggers[index]['name']} for ${triggers[index]['coin']} less than ${triggers[index]['price']} has been met.`
                                             })
+
+                                            // Update the trigger status
+                                            await Trigger.findByIdAndUpdate(
+                                                { _id: triggers[index]['_id'] },
+                                                { $set: { notified: true } },
+                                                { new: true })
                                         }
                                     } else if (condition == 'greater') {
                                         if (setPrice < originalCoinPrice) {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
                                                 message: `Your condition ${triggers[index]['name']} for ${triggers[index]['coin']} more than ${triggers[index]['price']} has been met.`
                                             })
+
+                                            // Update the trigger status
+                                            await Trigger.findByIdAndUpdate(
+                                                { _id: triggers[index]['_id'] },
+                                                { $set: { notified: true } },
+                                                { new: true })
                                         }
                                     } else if (condition == 'equal') {
                                         if (setPrice == originalCoinPrice) {
                                             io.sockets.in(`room_${userId}`).emit('triggersUpdate', {
                                                 message: `Your condition ${triggers[index]['name']} for ${triggers[index]['coin']} equal to ${triggers[index]['price']} has been met.`
                                             })
+
+                                            // Update the trigger status
+                                            await Trigger.findByIdAndUpdate(
+                                                { _id: triggers[index]['_id'] },
+                                                { $set: { notified: true } },
+                                                { new: true })
                                         }
                                     }
-
-                                    // Update the trigger status
-                                    await Trigger.findByIdAndUpdate(
-                                        { _id: triggers[index]['_id'] },
-                                        { $set: { notified: true } },
-                                        { new: true })
                                 }
 
                             }
