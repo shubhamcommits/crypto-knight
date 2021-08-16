@@ -70,7 +70,7 @@ const socket = {
                             .populate('triggers', '_id name coin price condition notified')
 
                         // Catching exception
-                        if (user.triggers === null)
+                        if (user.triggers == null)
                             user.triggers = []
 
                         // Create triggers array
