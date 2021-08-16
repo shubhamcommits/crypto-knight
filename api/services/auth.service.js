@@ -92,7 +92,7 @@ const AuthService = {
                 let data = {
                     first_name: userData.first_name,
                     last_name: userData.last_name,
-                    full_name: userData.first_name + userData.last_name,
+                    full_name: userData.first_name + " " + userData.last_name,
                     email: userData.email,
                     password: encryptedPass.password,
                     mobile_number: userData.mobile_number
